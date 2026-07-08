@@ -1,8 +1,10 @@
-﻿const API_BASE = import.meta.env.VITE_API_BASE_URL
+﻿const runtimeApiBase = typeof window !== 'undefined'
+  ? window.GUARDIAN_API_BASE_URL || window.location.origin
+  : '';
+
+const API_BASE = import.meta.env.VITE_API_BASE_URL
   ? import.meta.env.VITE_API_BASE_URL.replace(/\/$/, '')
-  : typeof window !== 'undefined'
-    ? window.GUARDIAN_API_BASE_URL || ''
-    : '';
+  : runtimeApiBase.replace(/\/$/, '');
 const API_PREFIX = '/api/v1';
 
 const buildApiUrl = (path) => {

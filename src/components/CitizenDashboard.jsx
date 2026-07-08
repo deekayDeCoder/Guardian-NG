@@ -400,11 +400,19 @@ export const CitizenDashboard = ({ onStealthLock, onAlertTriggered, onAdminClick
 
   const triggerUssdIncident = async (category, lga) => {
     const lgaCoords = {
-      'Gusau': { lat: 12.1628, lng: 6.6614 },
-      'Maru': { lat: 12.0000, lng: 6.4000 },
       'Anka': { lat: 12.1100, lng: 5.9200 },
-      'Zurmi': { lat: 12.7700, lng: 6.7900 },
-      'Talata Mafara': { lat: 12.5700, lng: 6.0600 }
+      'Bakura': { lat: 12.5700, lng: 6.0600 },
+      'Birnin Magaji': { lat: 12.5700, lng: 6.0600 },
+      'Bukkuyum': { lat: 12.5700, lng: 6.0600 },
+      'Bungudu': { lat: 12.5700, lng: 6.0600 },
+      'Gummi': { lat: 12.5700, lng: 6.0600 },
+      'Gusau': { lat: 12.1628, lng: 6.6614 },
+      'Kaura Namoda': { lat: 12.1628, lng: 6.6614 },
+      'Maradun': { lat: 12.1628, lng: 6.6614 },
+      'Maru': { lat: 12.0000, lng: 6.4000 },
+      'Shinkafi': { lat: 12.5700, lng: 6.0600 },
+      'Talata Mafara': { lat: 12.5700, lng: 6.0600 },
+      'Zurmi': { lat: 12.7700, lng: 6.7900 }
     };
     
     const coords = lgaCoords[lga] || { lat: 12.1628, lng: 6.6614 };
@@ -548,10 +556,19 @@ export const CitizenDashboard = ({ onStealthLock, onAlertTriggered, onAdminClick
         setUssdSessionText(`Select Local Government Area (LGA):\n1. Gusau\n2. Maru\n3. Anka\n4. Zurmi\n5. Talata Mafara\n\nEnter LGA option (1-5):`);
       } else {
         let lga = 'Gusau';
-        if (lgaIdx === '2') lga = 'Maru';
-        if (lgaIdx === '3') lga = 'Anka';
-        if (lgaIdx === '4') lga = 'Zurmi';
-        if (lgaIdx === '5') lga = 'Talata Mafara';
+        if (lgaIdx === '2') lga = 'Anka';
+        if (lgaIdx === '3') lga = 'Bakura';
+        if (lgaIdx === '4') lga = 'Birnin Magaji';
+        if (lgaIdx === '5') lga = 'Bukkuyum';
+        if (lgaIdx === '6') lga = 'Bungudu';
+        if (lgaIdx === '7') lga = 'Gummi';
+        if (lgaIdx === '8') lga = 'Kaura Namoda';
+        if (lgaIdx === '9') lga = 'Maradun';
+        if (lgaIdx === '10') lga = 'Maru';
+        if (lgaIdx === '11') lga = 'Shinkafi';
+        if (lgaIdx === '12') lga = 'Talata Mafara';
+        if (lgaIdx === '13') lga = 'Tsafe';
+        if (lgaIdx === '14') lga = 'Zurmi';
         
         setUssdLga(lga);
         
