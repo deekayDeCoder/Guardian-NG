@@ -2,10 +2,15 @@
   ? window.GUARDIAN_API_BASE_URL || window.location.origin
   : '';
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL
-  ? import.meta.env.VITE_API_BASE_URL.replace(/\/$/, '')
-  : runtimeApiBase.replace(/\/$/, '');
+// const API_BASE = import.meta.env.VITE_API_BASE_URL
+//   ? import.meta.env.VITE_API_BASE_URL.replace(/\/$/, '')
+//   : runtimeApiBase.replace(/\/$/, '');
+const API_BASE = import.meta.env.VITE_API_BASE_URL || "https://guardian-ng-backend.onrender.com";
 const API_PREFIX = '/api/v1';
+
+console.log('Runtime API Base:', runtimeApiBase);
+console.log('API_BASE:', API_BASE);
+console.log('API_PREFIX:', API_PREFIX);
 
 const buildApiUrl = (path) => {
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
