@@ -1,0 +1,11 @@
+services:
+  - type: static
+    name: guardian-ng-client
+    env: node
+    branch: main
+    buildCommand: cd client && npm install && npm exec vite build
+    staticPublishPath: client/dist
+    plan: free
+    envVars:
+      - key: NODE_ENV
+        value: production

@@ -1,0 +1,4 @@
+/src/*  /404.html  404
+
+# Fallback to index.html for SPA routes
+/*    /index.html   200
