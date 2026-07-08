@@ -3,7 +3,7 @@ import {createRoot} from 'react-dom/client';
 import App from './App.jsx';
 import './index.css';
 
-Register Service Worker for offline resilience
+// Register Service Worker for offline resilience
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js')
