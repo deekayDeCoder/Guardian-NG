@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { fetchIncidents as fetchIncidentsFromApi, updateIncidentStatus } from './utils.js';
 import { CitizenDashboard } from './components/CitizenDashboard';
 import { DispatcherPanel } from './components/DispatcherPanel';
 import { StealthLockUtility } from './components/StealthLockUtility';
 import { AdminAuthForm } from './components/AdminAuthForm';
+import ManagerPanel from './components/ManagerPanel';
 import { 
   Shield, 
   ServerCrash, 
@@ -201,8 +202,8 @@ function GuardianApp() {
         // Trigger a notification for the newly submitted report
         addToast(
           language === 'en'
-            ? `🚨 NEW CRISIS REPORT: ${newInc.category.toUpperCase()} submitted near coordinates.`
-            : `🚨 SABON RAHOTON GAGGAWA: An tura ${newInc.category.toUpperCase()} kusa da ku.`,
+            ? `ðŸš¨ NEW CRISIS REPORT: ${newInc.category.toUpperCase()} submitted near coordinates.`
+            : `ðŸš¨ SABON RAHOTON GAGGAWA: An tura ${newInc.category.toUpperCase()} kusa da ku.`,
           'warning'
         );
 
@@ -220,8 +221,8 @@ function GuardianApp() {
         // Acknowledgment received!
         addToast(
           language === 'en'
-            ? `✅ DISPATCH ACKNOWLEDGED: Incident status set to '${inc.status}'`
-            : `✅ AN TABBATAR DA AIKO: An saita rahoton a matsayin '${inc.status}'`,
+            ? `âœ… DISPATCH ACKNOWLEDGED: Incident status set to '${inc.status}'`
+            : `âœ… AN TABBATAR DA AIKO: An saita rahoton a matsayin '${inc.status}'`,
           'success'
         );
 
@@ -258,10 +259,8 @@ function GuardianApp() {
 
     try {
       await updateIncidentStatus(id, nextStatus);
-      // Pull fresh data to verify coordinates/clusters
-      fetchIncidents();
     } catch (err) {
-      console.error("Failed to sync state changes to API, kept optimistic local change.", err);
+      console.error('Failed to sync state changes to API, kept optimistic local change.', err);
     }
   };
 
@@ -333,6 +332,18 @@ function GuardianApp() {
             onAuthSuccess={(user) => setCurrentUser(user)}
             onBack={() => setAudienceMode('citizen')}
           />
+        ) : currentUser.role === 'manager' ? (
+          <ManagerPanel
+            incidents={incidents}
+            onUpdateStatus={handleUpdateStatus}
+            currentUser={currentUser}
+            onAuthUpdated={setCurrentUser}
+            onLogout={() => {
+              setCurrentUser(null);
+              setAudienceMode('citizen');
+            }}
+            addToast={addToast}
+          />
         ) : (
           <DispatcherPanel 
             incidents={incidents} 
@@ -357,3 +368,4 @@ export default function App() {
     </LanguageProvider>
   );
 }
+

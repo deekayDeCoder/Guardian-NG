@@ -1,4 +1,4 @@
-const API_BASE = import.meta.env.VITE_API_BASE_URL
+﻿const API_BASE = import.meta.env.VITE_API_BASE_URL
   ? import.meta.env.VITE_API_BASE_URL.replace(/\/$/, '')
   : typeof window !== 'undefined'
     ? window.GUARDIAN_API_BASE_URL || ''
@@ -65,6 +65,75 @@ export const updateIncidentStatus = async (id, status) => {
   return apiRequest(`/incidents/${id}/status`, 'PATCH', { status });
 };
 
+const buildAuthHeaders = (token = '') => ({
+  Authorization: token ? `Bearer ${token}` : ''
+});
+
+export const loginAdmin = async ({ email, agencyId, password, role }) => {
+  return apiRequest('/admin/login', 'POST', { email, agencyId, password, role });
+};
+
+export const updateAdminProfile = async ({ token, email, password }) => {
+  return apiRequest('/admin/profile', 'PATCH', { email, password }, buildAuthHeaders(token));
+};
+
+export const fetchAdmins = async (token) => {
+  return apiRequest('/admins', 'GET', null, buildAuthHeaders(token));
+};
+
+export const createAdmin = async ({ name, email, agencyId, password, role }, token) => {
+  return apiRequest('/admins', 'POST', { name, email, agencyId, password, role }, buildAuthHeaders(token));
+};
+
+export const deleteAdmin = async (adminId, token) => {
+  return apiRequest(`/admins/${adminId}`, 'DELETE', null, buildAuthHeaders(token));
+};
+
+export const ZAMFARA_LGAS = [
+  'Gusau',
+  'Talata Mafara',
+  'Anka',
+  'Bakura',
+  'Bukkuyum',
+  'Bungudu',
+  'Chafe',
+  'Gummi',
+  'Kaura Namoda',
+  'Maradun',
+  'Maru',
+  'Shinkafi',
+  'Tsafe',
+  'Zurmi',
+  'Birnin Magaji'
+];
+
+const normalizeForSearch = (value) =>
+  (value || '')
+    .replace(/[-_]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .toLowerCase();
+
+export const extractLgaFromIncident = (incident) => {
+  const source = normalizeForSearch(`${incident.locationDetails || ''} ${incident.description || ''}`);
+  for (const lga of ZAMFARA_LGAS) {
+    const normalizedLga = normalizeForSearch(lga);
+    if (source.includes(normalizedLga)) {
+      return lga;
+    }
+  }
+
+  return 'Unknown LGA';
+};
+
+export const aggregateIncidentsByLga = (incidents) => {
+  return incidents.reduce((acc, incident) => {
+    const lga = extractLgaFromIncident(incident);
+    acc[lga] = (acc[lga] || 0) + 1;
+    return acc;
+  }, {});
+};
+
 export const isBrowserOnline = () => typeof navigator !== 'undefined' && navigator.onLine;
 
 export const getOfflineQueue = () => {
@@ -93,3 +162,4 @@ export const createOfflineReport = ({ category, latitude, longitude, audioPayloa
   createdAt: new Date().toISOString(),
   status: 'Queued (Offline / Outbox)',
 });
+
