@@ -16,6 +16,7 @@ import {
   X 
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import InstallPrompt from './components/InstallPrompt';
 
 // Web Audio API Premium Sound Generators
 const playEmergencySound = () => {
@@ -296,6 +297,8 @@ function GuardianApp() {
     <div className="min-h-screen bg-[#F5F5F5] flex flex-col relative">
       {/* Toast Notification Container */}
       <ToastContainer toasts={toasts} onClose={removeToast} />
+
+      <InstallPrompt />
 
       {/* Top Brand Banner */}
       <div className="bg-[#212121] text-white px-6 py-2.5 flex flex-col sm:flex-row justify-between items-center text-xs font-bold gap-2.5 select-none border-b border-gray-800">

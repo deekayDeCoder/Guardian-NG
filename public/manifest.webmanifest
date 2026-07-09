@@ -1,0 +1,23 @@
+{
+  "name": "Guardian-NG",
+  "short_name": "Guardian",
+  "description": "Guardian-NG — Zamfara emergency reporting and command console.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0f5132",
+  "icons": [
+    {
+      "src": "/src/assets/guardian-ng-logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/src/assets/guardian-ng-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
